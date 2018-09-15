@@ -28,8 +28,8 @@
         }
       </div>
     )
-}
-```
+  }
+  ```
 ## Create the Dropzone component
 - install and import the Dropzone module
   ```javacsript
@@ -73,6 +73,32 @@
 
   import request from 'superagent'
   ```
+- post to the cloudinary url 
+  - the fields should be the Cloudinary preset and the file submitted 
+  - if the request contains a value, the response will send back the Cloudinary URL in the body which the state should be set to.
+  - now that the state contains the appropriate url, the image element should render with the url as the src instead of the dropzone
+  ```javascript
+  onImageDrop = (files) => {
+      const CLOUDINARY_UPLOAD_PRESET = 'ffusji9p';
+      const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/db0oxvrdr/image/upload'
+
+      let upload = request.post(CLOUDINARY_UPLOAD_URL)
+          .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+          .field('file', files[0])
+          upload.end((err, response) => {
+              if (err) {
+                console.error(err);
+              }
+
+              if (response.body.secure_url !== '') {
+                this.setState({
+                  uploadedFileCloudinaryUrl: response.body.secure_url
+                }, () => console.log(this.state.uploadedFileCloudinaryUrl));
+              }
+            });
+  }
+  ```
+
 
 
 
