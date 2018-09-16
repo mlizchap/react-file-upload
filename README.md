@@ -1,6 +1,6 @@
 # react-file-upload
 
-- Demo: 
+- Demo: https://github.com/mlizchap/react-file-upload-app
 
 ## Tools
 - **cloudinary**: For storing photos online 
